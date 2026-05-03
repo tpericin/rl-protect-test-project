@@ -25,7 +25,18 @@ jobs:
           RL_TOKEN: ${{ secrets.RL_TOKEN }}
         with:
           scan-path: package.json
-          report: rl-protect-npm.report.json
+          report: rl-protect-npm-1.report.json
+          post-pr-comment: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-assessment: simplified
+          comment-level: warn
+      - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+        if: always()
+        env:
+          RL_TOKEN: ${{ secrets.RL_TOKEN }}
+        with:
+          scan-path: projects/package.json
+          report: rl-protect-npm-2.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-assessment: simplified
