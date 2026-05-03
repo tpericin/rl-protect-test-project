@@ -1,0 +1,21 @@
+name: rl-protect scan
+
+on:
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tpericin/gh-action-rl-protect-scan@main
+        env:
+          RL_TOKEN: ${{ secrets.RL_TOKEN }}
+        with:
+          scan-path: requirements.txt
+          report: rl-protect.report.json
+          post-pr-comment: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-level: warn

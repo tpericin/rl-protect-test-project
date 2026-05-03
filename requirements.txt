@@ -1,0 +1,4 @@
+requests==2.25.0
+Pillow==8.0.0
+cryptography==3.0.0
+lightning==2.6.3
