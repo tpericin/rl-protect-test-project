@@ -18,4 +18,5 @@ jobs:
           report: rl-protect.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-assessment: simplified
           comment-level: fail
