@@ -19,6 +19,7 @@ jobs:
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-assessment: simplified
+          comment-policy: true
           comment-level: fail
       - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
         if: always()
