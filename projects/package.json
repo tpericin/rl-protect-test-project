@@ -2,8 +2,6 @@
   "name": "test-project",
   "version": "1.0.0",
   "dependencies": {
-    "ua-parser-js": "0.7.29",
-    "vue": "0.8.6",
     "express": "5.2.1"
   }
 }
