@@ -28,6 +28,7 @@ jobs:
           RL_TOKEN: ${{ secrets.RL_TOKEN }}
         with:
           scan-path: package.json
+          check-deps: release,transitive
           report: rl-protect-npm-1.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
