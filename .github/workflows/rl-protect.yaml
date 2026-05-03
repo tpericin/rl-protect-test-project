@@ -14,6 +14,7 @@ jobs:
           RL_TOKEN: ${{ secrets.RL_TOKEN }}
         with:
           scan-path: requirements.txt
+          scan-profile: 'baseline'
           report: rl-protect-pip.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
