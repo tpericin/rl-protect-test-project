@@ -1,5 +1,4 @@
 name: rl-protect scan
-
 on:
   pull_request:
 
@@ -15,12 +14,13 @@ jobs:
           RL_TOKEN: ${{ secrets.RL_TOKEN }}
         with:
           scan-path: requirements.txt
-          report: rl-protect.report.json
+          report: rl-protect-pip.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-assessment: table
           comment-level: fail
       - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+        if: always()
         env:
           RL_TOKEN: ${{ secrets.RL_TOKEN }}
         with:
