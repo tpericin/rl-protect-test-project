@@ -29,6 +29,7 @@ jobs:
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-assessment: simplified
+          comment-license: true
           comment-level: warn
       - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
         if: always()
@@ -40,4 +41,5 @@ jobs:
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-assessment: table
+          comment-license: true
           comment-level: warn
