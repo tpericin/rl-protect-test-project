@@ -20,3 +20,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-assessment: table
           comment-level: fail
+      - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+        env:
+          RL_TOKEN: ${{ secrets.RL_TOKEN }}
+        with:
+          scan-path: package.json
+          report: rl-protect-npm.report.json
+          post-pr-comment: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-assessment: simplified
+          comment-level: warn
