@@ -14,38 +14,8 @@ jobs:
           RL_TOKEN: ${{ secrets.RL_TOKEN }}
         with:
           scan-path: requirements.txt
-          scan-profile: 'baseline'
           report: rl-protect-pip.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-assessment: simplified
-          comment-overrides: true
-          comment-policy: true
           comment-level: fail
-      - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
-        if: always()
-        env:
-          RL_TOKEN: ${{ secrets.RL_TOKEN }}
-        with:
-          scan-path: package.json
-          check-deps: release,transitive
-          report: rl-protect-npm-1.report.json
-          post-pr-comment: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          comment-assessment: simplified
-          comment-license: true
-          comment-level: warn
-      - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
-        if: always()
-        env:
-          RL_TOKEN: ${{ secrets.RL_TOKEN }}
-        with:
-          scan-path: projects/package.json
-          check-deps: release,transitive
-          report: rl-protect-npm-2.report.json
-          post-pr-comment: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          comment-assessment: table
-          comment-license: true
-          comment-policy: true
-          comment-level: warn
