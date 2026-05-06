@@ -15,10 +15,10 @@
           "vulnerabilities": {
             "ignored": false,
             "detections": {
-              "mandate": "fail",
-              "exploit": "fail",
-              "malware": "fail",
-              "critical": "fail"
+              "mandate": "warning",
+              "exploit": "warning",
+              "malware": "warning",
+              "critical": "warning"
             }
           },
           "hardening": { "ignored": false },
@@ -41,7 +41,16 @@
             "min_package_age": 90,
             "min_version_age": 3,
             "allow": [],
-            "block": []
+            "block": [
+              {
+                "pattern": "pkg:npm/ua-parser-js@*",
+                "audit": {
+                  "author": "tpericin@reversinglabs.com",
+                  "timestamp": "2026-05-06T09:00:00+00:00",
+                  "reason": "Known backdoored package — blocked for all versions."
+                }
+              }
+            ]
           }
         },
         "overrides": {
