@@ -17,7 +17,7 @@ jobs:
           report: rl-protect-pip.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          comment-template: 'expanded'
+          comment-template: 'concise'
       - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
         if: always()
         env:
@@ -29,4 +29,4 @@ jobs:
           report: rl-protect-npm-1.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          comment-template: 'concise'
+          comment-template: 'expanded'
