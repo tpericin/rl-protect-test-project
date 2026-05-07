@@ -29,4 +29,4 @@ jobs:
           report: rl-protect-npm-1.report.json
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          comment-template: 'expanded'
+          comment-template: 'verbose'
