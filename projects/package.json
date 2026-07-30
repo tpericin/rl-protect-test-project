@@ -1,0 +1,8 @@
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "axios": "0.30.4",
+    "express": "5.2.1"
+  }
+}

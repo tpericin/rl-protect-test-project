@@ -1,0 +1,71 @@
+{
+  "rl-profile": {
+    "schema": 1,
+    "name": "Custom test profile",
+    "info": "Elevates tampering heuristic rule TH17127 to fail.",
+    "timestamp": "2026-05-06T09:00:00+00:00",
+    "configuration": {
+      "policy": {
+        "min_catalogue": 5,
+        "rl_scan_level": 5,
+        "rl_auto_approval": false,
+        "assessments": {
+          "secrets": { "ignored": false },
+          "licenses": { "ignored": false },
+          "vulnerabilities": {
+            "ignored": false,
+            "detections": {
+              "mandate": "warning",
+              "exploit": "warning",
+              "malware": "warning",
+              "critical": "warning"
+            }
+          },
+          "hardening": { "ignored": false },
+          "tampering": {
+            "ignored": false
+          },
+          "malware": {
+            "ignored": false,
+            "rl_analyst": "fail",
+            "rl_scanner": "fail",
+            "suspicious": "warning",
+            "dependency": {
+              "develop": "warning",
+              "release": "fail"
+            }
+          }
+        },
+        "governance": {
+          "community": {
+            "min_package_age": 90,
+            "min_version_age": 3,
+            "allow": [],
+            "block": [
+              {
+                "pattern": "pkg:npm/ua-parser-js@*",
+                "audit": {
+                  "author": "tpericin@reversinglabs.com",
+                  "timestamp": "2026-05-06T09:00:00+00:00",
+                  "reason": "Known backdoored package — blocked for all versions."
+                }
+              }
+            ]
+          }
+        },
+        "overrides": {
+          "TH17127": {
+            "enabled": true,
+            "blocker": "fail",
+            "apply_to": ["any"],
+            "audit": {
+              "author": "tpericin@reversinglabs.com",
+              "timestamp": "2026-05-06T09:00:00+00:00",
+              "reason": "Elevate TH17127 to fail for testing policy violation path in report summary."
+            }
+          }
+        }
+      }
+    }
+  }
+}
