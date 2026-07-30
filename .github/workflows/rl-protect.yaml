@@ -9,7 +9,10 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+
+      # pip, no artifact selection - baseline to compare the others against
+      - name: pip - no target
+        uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
         env:
           RL_TOKEN: ${{ secrets.RL_TOKEN }}
         with:
@@ -18,7 +21,53 @@ jobs:
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-template: 'concise'
-      - uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+
+      # artifact selection by preset
+      - name: pip - target by platform preset
+        uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+        if: always()
+        env:
+          RL_TOKEN: ${{ secrets.RL_TOKEN }}
+        with:
+          scan-path: requirements.txt
+          report: rl-protect-pip-linux.report.json
+          target-python: '3.12'
+          target-platform: 'linux-x86_64'
+          verbose: true
+
+      # same target, composed from os/arch/libc instead of a preset
+      - name: pip - target by os/arch/libc
+        uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+        if: always()
+        env:
+          RL_TOKEN: ${{ secrets.RL_TOKEN }}
+        with:
+          scan-path: requirements.txt
+          report: rl-protect-pip-glibc.report.json
+          target-python: '3.12'
+          target-os: 'linux'
+          target-arch: 'x86_64'
+          target-libc: 'glibc:2.34'
+          verbose: true
+
+      # repeatable inputs: two platforms and two abi tags from one csv each
+      - name: pip - repeatable platform and abi
+        uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+        if: always()
+        env:
+          RL_TOKEN: ${{ secrets.RL_TOKEN }}
+        with:
+          scan-path: requirements.txt
+          report: rl-protect-pip-multi.report.json
+          target-python: '3.12'
+          target-platform: 'linux-x86_64,macos-arm64'
+          target-abi: 'cp312,abi3'
+          target-implementation: 'cp'
+          verbose: true
+
+      # npm, unchanged
+      - name: npm
+        uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
         if: always()
         env:
           RL_TOKEN: ${{ secrets.RL_TOKEN }}
@@ -30,3 +79,26 @@ jobs:
           post-pr-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-template: 'expanded'
+
+      # npm with target flags set: rl-protect should warn they do not apply
+      # and scan normally, because artifact selection is PyPI only
+      - name: npm - target flags ignored
+        uses: tpericin/gh-action-rl-protect-scan@sdlc-comment
+        if: always()
+        env:
+          RL_TOKEN: ${{ secrets.RL_TOKEN }}
+        with:
+          scan-path: projects/package.json
+          report: rl-protect-npm-target.report.json
+          target-python: '3.12'
+          target-platform: 'linux-x86_64'
+          verbose: true
+
+      # keep the reports so the purls can be inspected
+      - name: upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rl-protect-reports
+          path: rl-protect-*.report.json
+          if-no-files-found: warn
